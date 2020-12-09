@@ -1,0 +1,64 @@
+
+
+#include <EEPROM.h>
+
+String dato;
+int passtwork;  
+int clave=4563;  // clave predeterminada
+int encendido=0;
+int x;
+
+
+void setup() {
+  Serial.begin(9600);
+  attachInterrupt(0,entrada,LOW);
+  EEPROM.get(0,x);
+ 
+}
+void loop() {
+  if(encendido==1){
+    if(Serial.available()>0){
+      dato=Serial.readString();
+      passtwork=dato.toInt();
+    }
+  }
+  if(encendido==2){
+    if(x==clave){
+      Serial.println("Contrasena correcta");
+      delay(1000);
+    }
+    if(x!=clave){
+      Serial.println("Contrasena incorrecta");
+      delay(1000);
+    }
+  }
+  if(encendido==3){
+      if(Serial.available()>0){
+        dato=Serial.readString();
+        passtwork=dato.toInt();
+      }
+      x=passtwork;
+      EEPROM.update(0,x);  
+      clave=x;
+  }
+}
+void entrada(){
+  switch(encendido){
+    case 0:
+      Serial.println("Ingrese constrasena");
+      encendido++;
+    break;
+    case 1:
+      Serial.println("Validar contrasena");
+      encendido++;
+    break;
+    case 2:
+      Serial.println("Ingrese nueva contrasena");
+      encendido++;
+    break;
+    case 3:
+      Serial.println("Guardado Correcto")
+    break;
+    passtwork=0;
+  }
+}
