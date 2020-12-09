@@ -1,7 +1,8 @@
-
+Deber #7
+Jhonatan Jacome
+Realiza un programa que valide y actualice una contraseña almacenada en la memoria EEPROM. Como estado inicial, la contraseña es de 4 dígitos que son: 4563. 
 
 #include <EEPROM.h>
-
 String dato;
 int passtwork;  
 int clave=4563;  // clave predeterminada
